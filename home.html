@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 
@@ -101,6 +102,192 @@ img {
 .font-cond-b {
     font-weight: 700 !important;
 }
+* {
+  box-sizing: border-box;
+  position: relative;
+}
+
+
+#form-wrapper {
+  margin-top: 80px;
+  height: 545px;
+  transition: all 1s ease;
+  overflow: hidden;
+}
+#form-wrapper.answering {
+  height: 150px;
+  overflow: hidden;
+}
+
+.question {
+  width: 455px;
+  margin: 0 auto;
+  height: 30px;
+  overflow: hidden;
+}
+.question,
+.question * {
+  transition: all 0.3s ease;
+}
+.question .q-back {
+  opacity: 1;
+}
+.question label {
+  font-size: 20px;
+  padding-left: 20px;
+}
+.question input,
+.question .q-next {
+  display: none;
+}
+.question .q-text {
+  height: 30px;
+  line-height: 30px;
+}
+.question .q-answer {
+  display: inline;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.question.open {
+  height: 90px;
+  margin-bottom: 150px;
+}
+.question.open label {
+  font-size: 30px;
+}
+.question.open .q-back {
+  opacity: 0;
+}
+.question.open input {
+  display: block;
+}
+.question.open .q-next {
+  display: block;
+}
+.question.open .q-text {
+  height: 40px;
+  line-height: 40px;
+}
+.question.open .q-answer {
+  display: none;
+}
+
+.q-next {
+  display: block;
+  position: absolute;
+  bottom: 5px;
+  right: 0px;
+  padding: 0 10px;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  font-size: 30px;
+  cursor: pointer;
+}
+.q-next:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.q-back {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 30px;
+  padding-left: 4px;
+}
+.q-back:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.q-text {
+  max-height: 40px;
+  overflow: hidden;
+  display: block;
+}
+
+label {
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 40px;
+}
+
+input {
+  border: 0px;
+  outline: 0;
+  box-shadow: 0;
+  background: rgba(0, 0, 0, 0.15);
+  border-bottom: 5px solid rgba(0, 0, 0, 0.05);
+  color: black;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 10px;
+  font-size: 30px;
+}
+
+.q-title {
+  text-align: center;
+  line-height: 10px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.q-after {
+  width: 400px;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 20px 0;
+}
+.q-confirm-text {
+  font-size: 20px;
+  padding: 20px 0;
+}
+.q-confirm-button {
+  transition: all 0.3s ease;
+  display: block;
+  padding: 0 10px;
+  padding-left: 50px;
+  height: 40px;
+  line-height: 40px;
+  width: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  color: white;
+}
+.q-confirm-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.q-confirm-button:before {
+  content: ">";
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 40px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  text-align: center;
+  line-height: 40px;
+  font-size: 25px;
+  color: white;
+}
+
+hr {
+  box-shadow: 0px;
+  outline: 0px;
+  border: 0px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
 </style>
 </head>
 <body>
@@ -216,7 +403,7 @@ img {
       </ul>
 </div>
 
-<section class="w3-container w3-light-grey" style="padding:50px 35px" id="register">
+<!-- <section class="w3-container w3-light-grey" style="padding:50px 35px" id="register">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col">
@@ -411,7 +598,185 @@ img {
         function Reset() {
             document.getElementById("sheetdb-form").reset();
          }
-</script>
+</script> -->
+
+<div class = "w3-container w3-light-grey"  style="padding:75px 0px" id="register">
+  <div ng-app="coolform" class="wrapper">
+  <div class="q-title">Register Here!</div>
+    <form action="https://sheetdb.io/api/v1/p2s5jviwucha4" method="post" id="sheetdb-form"  >
+      <div cool-form>
+      
+        <div ng-repeat="q in questions" class="question">
+          <label>
+            <span class="q-text">
+              {{q.question}}:
+              <span style="font-size:75%" class="q-answer">
+                {{q.answer}}
+              </span>
+            </span>
+            <input style="font-size:50%" type="text" id="q{{$index}}" ng-model="q.answer" name="data[{{q.question}}]">
+            <span class="q-back" ng-click="open($index)"><</span>
+          </label>
+          <span class="q-next" ng-click="open($index+1)">></span>  
+        </div>
+        <div class="q-after">
+          <div class="q-confirm-text" id="confirmationAlert">Is the above information correct?</div>
+          <h3 class="mb-5 text-uppercase" style = "display:none" id="registrationAlert">Thank You for registering!</h3>
+          <button type="submit" class="btn btn-warning btn-lg ms-2" id="registerButton">Absolutely</button>
+        </div>
+      </div>
+      <center ng-show="activequestion > -1 && activequestion < questions.length">{{activequestion+1}} / {{questions.length}}</center>
+      
+    </form>  
+  </div>
+  </div>
+  
+  <script>
+  var coolform = angular.module("coolform", []);
+  coolform.directive("coolForm", function ($timeout) {
+    var ctrl = function ($scope, $element, $attributes) {
+      $scope.questions = [];
+      $scope.activequestion = -1;
+      $scope.answering = true;
+  
+      $scope.questions.push({ question: "Email" });
+      $scope.questions.push({ question: "Name" });
+      $scope.questions.push({ question: "Father's Name" });
+      $scope.questions.push({ question: "Date Of Birth" });
+      $scope.questions.push({ question: "Marital Status" });
+      $scope.questions.push({ question: "Qualification" });
+      $scope.questions.push({ question: "Institution And Location" });
+      $scope.questions.push({ question: "Year Of Graduation" });
+      $scope.questions.push({ question: "Period Of Experience" });
+      $scope.questions.push({ question: "Languages Known" });
+      $scope.questions.push({ question: "Preferred Locations To Work" });
+      $scope.questions.push({ question: "Details To Contact" });
+      $scope.questions.push({ question: "Any Questions" });
+  
+      function removeOpen() {
+        for (i = 0; i < qs.length; i++) {
+          angular.element(qs[i]).removeClass("open");
+        }
+      }
+  
+      var scrolle = document.getElementById("form-wrapper");
+      var qs = document.getElementsByClassName("question");
+  
+      $scope.open = function (order) {
+        removeOpen();
+        if (order >= $scope.questions.length || order < 0) {
+          $scope.answering = false;
+          if ($element.hasClass("answering")) {
+            $element.removeClass("answering");
+            $scope.activequestion = $scope.questions.length + 1;
+          }
+        } else {
+          $scope.answering = true;
+          if (!$element.hasClass("answering")) {
+            $element.addClass("answering");
+          }
+          //document.activeElement.blur();
+          $scope.activequestion = order;
+          var offset = qs[0].offsetTop;
+          if (order !== 0) {
+            offset = qs[order - 1].offsetTop;
+          }
+          scrollToAndFocus(scrolle, offset, 500, order);
+          if (!angular.element(qs[order]).hasClass("open")) {
+            angular.element(qs[order]).addClass("open");
+          }
+        }
+      };
+  
+      function scrollToAndFocus(element, to, duration, focus) {
+        if (duration <= 10) {
+          document.getElementById("q" + focus).focus();
+          return;
+        }
+        var difference = to - element.scrollTop;
+        var perTick = (difference / duration) * 10;
+        window.setTimeout(function () {
+          element.scrollTop = element.scrollTop + perTick;
+          if (element.scrollTop === to) return;
+          scrollToAndFocus(element, to, duration - 10, focus);
+        }, 10);
+      }
+  
+      var handler = function (e) {
+        if (e.keyCode === 37) {
+          //left arrow
+          e.preventDefault();
+          $scope.$apply(function () {
+            $scope.open($scope.activequestion - 1);
+          });
+        }
+        if (e.keyCode === 39) {
+          //right arrow
+          e.preventDefault();
+          $scope.$apply(function () {
+            $scope.open($scope.activequestion + 1);
+          });
+        }
+        if (e.keyCode === 13) {
+          //enter
+          e.preventDefault();
+          $scope.$apply(function () {
+            $scope.open($scope.activequestion + 1);
+          });
+        }
+        if (e.keyCode == 9) {
+          //tab
+          e.preventDefault();
+          $scope.$apply(function () {
+            $scope.open($scope.activequestion + 1);
+          });
+        }
+      };
+  
+      $element.on("keydown", handler);
+      $scope.$on("$destroy", function () {
+        $element.off("keydown", handler);
+      });
+  
+      setTimeout(function () {
+        $scope.activequestion++;
+        $scope.$apply(function () {
+          $scope.open($scope.activequestion);
+        });
+      }, 2000);
+    };
+    return {
+      restrict: "EA",
+      replace: true,
+      transclude: true,
+      link: ctrl,
+      template: '<div ng-transclude id="form-wrapper" class="answering"></div>'
+    };
+  });
+  
+  </script>
+  
+  <script>
+        var form = document.getElementById('sheetdb-form');
+          form.addEventListener("submit", e => {
+            e.preventDefault();
+            fetch(form.action, {
+                method : "POST",
+                body: new FormData(document.getElementById("sheetdb-form")),
+            }).then(
+                response => response.json()
+            ).then((html) => {
+			      document.getElementById("sheetdb-form").reset();
+            document.getElementById("registerButton").style.display = "none";
+            document.getElementById("registrationAlert").style.display = "block";
+            document.getElementById("confirmationAlert").style.display = "none";
+          });
+          });
+          
+          function Reset() {
+              document.getElementById("sheetdb-form").reset();
+           }
+  </script>
 
 <!-- Contact Section -->
 <div class="w3-container" style="padding:12px 16px" id="contact">
